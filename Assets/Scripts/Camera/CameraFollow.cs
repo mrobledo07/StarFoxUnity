@@ -18,7 +18,7 @@ public class CameraFollow : MonoBehaviour
 
             // Corregir la lógica de rotación
             Quaternion targetRotation = target.rotation; // Obtener directamente la rotación de la nave
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 0.5f); // Suavizar la rotación
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 0.5f / divisor); // Suavizar la rotación
         }
     }
 }
