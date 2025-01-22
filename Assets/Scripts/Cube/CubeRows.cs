@@ -4,7 +4,7 @@ public class CubeRows : MonoBehaviour
 {
     public GameObject cubePrefab; // Asigna un prefab de cubo aquí
     public int cubesPerRow = 10; // Cantidad de cubos por fila
-    public float spacing = 2f; // Espaciado entre cubos
+    public float spacing = 4f; // Espaciado entre cubos
     public float rowInterval = 1f; // Tiempo entre filas
     public float speed = 5f; // Velocidad de movimiento de los cubos
     public float startZ = 50f; // Posición inicial en z
@@ -29,8 +29,9 @@ public class CubeRows : MonoBehaviour
         {
             Vector3 position = new Vector3(i * spacing, fixedY, startZ); 
             GameObject cube = Instantiate(cubePrefab, position, Quaternion.identity);
-            cube.AddComponent<CubeDestroyer>(); // Agrega el script de destrucción al cubo.
-            Rigidbody rb = cube.AddComponent<Rigidbody>();
+            cube.AddComponent<GameObjectDestroyer>(); // Agrega el script de destrucción al cubo.
+            Rigidbody rb = cube.GetComponent<Rigidbody>();
+            if (rb == null) rb = cube.AddComponent<Rigidbody>(); // Verifica si ya existe
             rb.useGravity = false; // Asegúrate de que no caigan debido a la gravedad.
             rb.linearVelocity = Vector3.back * speed; // Establece la velocidad hacia atrás.
         }
