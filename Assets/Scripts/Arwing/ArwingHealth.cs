@@ -145,6 +145,12 @@ public class ArwingHealth : MonoBehaviour
     {
         Debug.Log("Game Over!");
 
+        // Detener música
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopMusic();
+        }
+
         // Verificación adicional antes de mostrar
         if (gameOverImage != null && !gameOverImage.gameObject.activeSelf)
         {
@@ -153,6 +159,7 @@ public class ArwingHealth : MonoBehaviour
             // Reproducir sonido solo si no se está reproduciendo ya
             if (!audioSource.isPlaying && gameOverSound != null)
             {
+                audioSource.volume = AudioManager.Instance.musicVolume;
                 audioSource.PlayOneShot(gameOverSound);
             }
 
