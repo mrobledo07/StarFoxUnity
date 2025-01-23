@@ -29,6 +29,9 @@ public class ArwingHealth : MonoBehaviour
 
     public event System.Action OnLivesChanged;
 
+    [Header("Secuencia de pérdida de vida")]
+    public LifeLostManager lifeLostManager;
+
     [Header("Game Over Config")]
     public Image gameOverImage; // Arrastra tu imagen de Game Over del Canvas aquí
     public AudioClip gameOverSound; // Arrastra el sonido de Mortal Kombat aquí
@@ -80,11 +83,11 @@ public class ArwingHealth : MonoBehaviour
         Debug.Log("Current health: " + currentHealth);
         
 
-        if (damageEffect != null)
+        if (damageEffect != null && currentHealth > 0)
         {
             damageEffect.TriggerDamageEffect();
             Debug.Log("Damage effect triggered");
-        }
+        } 
 
 
         UpdateHealthUI();
@@ -94,7 +97,7 @@ public class ArwingHealth : MonoBehaviour
             LoseLife();
         } else
         {
-              regenCoroutine = StartCoroutine(RegenHealth());
+            regenCoroutine = StartCoroutine(RegenHealth());
         }
         
     }
@@ -131,8 +134,12 @@ public class ArwingHealth : MonoBehaviour
         currentLives--;
         OnLivesChanged?.Invoke(); // Notificar a la UI
 
-        if (currentLives > 0)
+        if (currentLives >= 0)
         {
+            if (lifeLostManager != null)
+            {
+                lifeLostManager.StartLifeLostSequence(currentLives);
+            }
             Respawn();
         }
         else
