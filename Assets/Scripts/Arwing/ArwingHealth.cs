@@ -154,6 +154,9 @@ public class ArwingHealth : MonoBehaviour
         // Verificación adicional antes de mostrar
         if (gameOverImage != null && !gameOverImage.gameObject.activeSelf)
         {
+            Color opaqueColor = gameOverImage.color;
+            opaqueColor.a = 1f;
+            gameOverImage.color = opaqueColor;
             gameOverImage.gameObject.SetActive(true);
 
             // Reproducir sonido solo si no se está reproduciendo ya
